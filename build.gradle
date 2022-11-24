@@ -52,6 +52,8 @@ buildscript {
         mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" }
         CommunityProjectsBuild.addDevRepositoryIfEnabled(delegate, project)
+        maven { url "https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev" }
+        maven { url "https://maven.pkg.jetbrains.space/kotlin/p/wasm/experimental" }
         mavenLocal()
     }
 
@@ -143,6 +145,9 @@ allprojects {
         google()
         mavenCentral()
         CommunityProjectsBuild.addDevRepositoryIfEnabled(delegate, project)
+        maven { url "https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev" }
+        maven { url "https://maven.pkg.jetbrains.space/kotlin/p/wasm/experimental" }
+        mavenLocal()
     }
 }
 
@@ -162,6 +167,7 @@ configure(subprojects.findAll { !sourceless.contains(it.name) && it.name != core
         }
 
         apply from: rootProject.file("gradle/compile-js-multiplatform.gradle")
+        apply from: rootProject.file("gradle/compile-wasm-multiplatform.gradle")
         apply from: rootProject.file("gradle/publish-npm-js.gradle")
         kotlin.sourceSets.commonMain.dependencies {
             api project(":$coreModule")
