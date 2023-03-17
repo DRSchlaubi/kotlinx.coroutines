@@ -5,7 +5,10 @@
 
 import org.jetbrains.kotlin.config.KotlinCompilerVersion
 import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
-import org.jetbrains.kotlin.gradle.tasks.AbstractKotlinCompile
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin
+import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin
+import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension
 import org.jetbrains.kotlin.konan.target.HostManager
 import org.jetbrains.dokka.gradle.DokkaTaskPartial
 
@@ -360,4 +363,25 @@ allprojects { subProject ->
 
 tasks.named("dokkaHtmlMultiModule") {
     pluginsMapConfiguration.set(["org.jetbrains.dokka.base.DokkaBase": """{ "templatesDir": "${projectDir.toString().replace('\\', '/')}/dokka-templates" }"""])
+}
+
+//noinspection ConfigurationAvoidance
+rootProject.plugins.withType(YarnPlugin.class) {
+    def yarnRootExtension = rootProject.extensions.findByType(YarnRootExtension.class)
+    def yarnDownloadUrl = yarnRootExtension.downloadBaseUrl
+    def yarnDownloadReplacedUrl = CacheRedirector.maybeRedirect(yarnDownloadUrl)
+    if (yarnDownloadUrl != yarnDownloadReplacedUrl) {
+        yarnRootExtension.downloadBaseUrl = yarnDownloadReplacedUrl
+    }
+    println(yarnDownloadUrl)
+}
+
+//noinspection ConfigurationAvoidance
+rootProject.plugins.withType(NodeJsRootPlugin.class) {
+    def nodeJsExtension = rootProject.extensions.findByType(NodeJsRootExtension.class)
+    def nodeDownloadUrl = nodeJsExtension.nodeDownloadBaseUrl
+    def nodeReplacedUrl = CacheRedirector.maybeRedirect(nodeDownloadUrl)
+    if (nodeDownloadUrl != nodeReplacedUrl) {
+        nodeJsExtension.nodeDownloadBaseUrl = nodeReplacedUrl
+    }
 }

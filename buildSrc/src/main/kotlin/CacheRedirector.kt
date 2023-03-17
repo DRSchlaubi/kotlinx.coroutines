@@ -26,10 +26,12 @@ private val mirroredUrls = listOf(
     "https://dl.google.com/dl/android/studio/ide-zips",
     "https://dl.google.com/go",
     "https://download.jetbrains.com",
+    "https://github.com/yarnpkg/yarn/releases/download",
     "https://jitpack.io",
     "https://maven.pkg.jetbrains.space/kotlin/p/kotlin/bootstrap",
     "https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev",
     "https://maven.pkg.jetbrains.space/kotlin/p/kotlin/eap",
+    "https://nodejs.org/dist",
     "https://oss.sonatype.org/content/repositories/releases",
     "https://oss.sonatype.org/content/repositories/snapshots",
     "https://oss.sonatype.org/content/repositories/staging",
@@ -50,7 +52,7 @@ private val mirroredUrls = listOf(
     "https://www.myget.org/F/intellij-go-snapshots/maven",
     "https://www.myget.org/F/rd-model-snapshots/maven",
     "https://www.myget.org/F/rd-snapshots/maven",
-    "https://www.python.org/ftp"
+    "https://www.python.org/ftp",
 )
 
 private val aliases = mapOf(
@@ -114,5 +116,11 @@ object CacheRedirector {
     @JvmStatic
     fun Project.configure() {
         checkRedirect(repositories, displayName)
+    }
+
+    @JvmStatic
+    fun maybeRedirect(url: String): String {
+        if (!cacheRedirectorEnabled) return url
+        return URI(url).maybeRedirect()?.toString() ?: url
     }
 }
