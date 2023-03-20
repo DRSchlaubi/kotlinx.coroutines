@@ -10,7 +10,7 @@ apply from: rootProject.file("gradle/compile-jvm-multiplatform.gradle")
 apply from: rootProject.file("gradle/compile-common.gradle")
 
 if (rootProject.ext.native_targets_enabled) {
-    apply from: rootProject.file("gradle/compile-native-multiplatform.gradle")
+//    apply from: rootProject.file("gradle/compile-native-multiplatform.gradle")
 }
 
 apply from: rootProject.file("gradle/compile-js-multiplatform.gradle")
@@ -92,8 +92,8 @@ static boolean isNativeOther(String name) { return ["linux", "mingw", "androidNa
 defineSourceSet("concurrent", ["common"]) { it in ["jvm", "native"] }
 
 if (rootProject.ext.native_targets_enabled) {
-    defineSourceSet("nativeDarwin", ["native"]) { isNativeDarwin(it) }
-    defineSourceSet("nativeOther", ["native"]) { isNativeOther(it) }
+//    defineSourceSet("nativeDarwin", ["native"]) { isNativeDarwin(it) }
+//    defineSourceSet("nativeOther", ["native"]) { isNativeOther(it) }
 }
 
 /* ========================================================================== */

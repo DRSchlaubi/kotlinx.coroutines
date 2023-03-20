@@ -163,7 +163,7 @@ configure(subprojects.findAll { !sourceless.contains(it.name) && it.name != core
         apply from: rootProject.file("gradle/compile-common.gradle")
 
         if (rootProject.ext["native_targets_enabled"] as Boolean) {
-            apply from: rootProject.file("gradle/compile-native-multiplatform.gradle")
+            // apply from: rootProject.file("gradle/compile-native-multiplatform.gradle")
         }
 
         apply from: rootProject.file("gradle/compile-js-multiplatform.gradle")

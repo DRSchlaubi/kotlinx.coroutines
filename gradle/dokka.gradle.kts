@@ -53,9 +53,9 @@ if (project.name == "kotlinx-coroutines-core") {
                 makeLinkMapping(project.file("common"))
             }
 
-            val nativeMain by getting {
-                makeLinkMapping(project.file("native"))
-            }
+//            val nativeMain by getting {
+//                makeLinkMapping(project.file("native"))
+//            }
 
             val jsMain by getting {
                 makeLinkMapping(project.file("js"))
